@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
-from requests import get_data
+from requests import get_charts
 import json
-
 app = Flask(__name__)
 
 with open('sample.json', 'r') as file:
@@ -23,7 +22,7 @@ def route_get_data():
     if request.method == "POST":
         # user_input_1 = request.form['user_input_1']
         # user_input_2 = request.form['user_input_2']
-        return get_data()
+        return get_charts()
 
 
 if __name__ == '__main__':
