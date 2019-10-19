@@ -1,7 +1,13 @@
+import json
+
 from flask import Flask, render_template, request
+
 from requests import get_chart
 
 app = Flask(__name__)
+
+with open('sample.json', 'r') as file:
+    input_data = json.load(file)
 
 
 @app.route('/')
