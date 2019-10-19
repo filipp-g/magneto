@@ -4,7 +4,14 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 59.991699, lng: -101.407434},
         zoom: 3.5,
+        fullscreenControl: false,
+        streetViewControl: false,
+        mapTypeControl: false,
+        scaleControl: true
     });
+
+    var infowindow = new google.maps.InfoWindow();
+    var i = 0;
 
     for (let key in magneto_json) {
         let marker = new google.maps.Marker({
@@ -17,12 +24,22 @@ function initMap() {
         });
         let circle = new google.maps.Circle({
             map: map,
-            radius: magneto_json[key]["data"][0][0] * 1000,    // 10 miles in metres
+            radius: magneto_json[key]["data"][0][1] * 5000,    // 10 miles in metres
             fillColor: 'red',
             fillOpacity: .2,
             strokeColor: 'white',
             strokeWeight: .5
         });
         circle.bindTo('center', marker, 'position');
+
+        google.maps.event.addListener(circle, 'click', (function(marker, i) {
+            return function() {
+            infowindow.setContent('<div id="infowindow"><h6>'+ key + '</h6>'+'<p>'+ 'magnetic field: ' + (magneto_json[key]["data"][0][1]).toLocaleString() +'</p>'/*'Location'*/);
+            infowindow.open(map, marker);
+            map.panTo(marker.position);
+        }
+        })(marker, i));
+        i++;
+
     }
 }
