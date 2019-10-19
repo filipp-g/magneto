@@ -1,16 +1,6 @@
-<head>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/data.js') }}"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
+{% extends 'base.html' %}
 
-<body>
+{% block content %}
     <div class="container">
         <div class="row p-3">
             <div class="col-3">
@@ -20,8 +10,8 @@
                     </div>
                     <div class="card-body control-panel">
                         <label for="customRange1"><b>Date to View:</b> <span id="current-date">01-01</span></label>
-                        <input type="range" id="date-slider" class="custom-range menu-item" id="customRange1" min="0" max="743" value="0">
-
+                        <input type="range" id="date-slider" class="custom-range menu-item" id="customRange1" min="0"
+                               max="743" value="0">
                         <br>
                         <h6 class="menu-item"><b>Interpolation Method</b></h6>
 
@@ -45,7 +35,9 @@
                         <br>
                         <a id="btn-save-data">
                             <button class="btn btn-primary">
-                                <i  class="fa fa-save fa-lg"></i> Save Data</button></a>
+                                <i class="fa fa-save fa-lg"></i> Save Data
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -62,6 +54,5 @@
                 </div>
             </div>
         </div>
-</body>
-
-</html>
+    </div>
+{% endblock %}
