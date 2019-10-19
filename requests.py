@@ -23,8 +23,10 @@ def get_chart(date):
     data = [{'x': x, 'y': y} for x, y in zip(lx, ly)]
     chart = _build_chart('line', {
         'datasets': {
-            'label': 'data',
-            'data': data}
+            'label': date,
+            'data': data,
+            'pointBackgroundColor': '#007bff'
+        }
     }, None)
     return json.dumps(chart)
 
