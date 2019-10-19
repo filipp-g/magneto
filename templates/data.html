@@ -18,21 +18,25 @@
                         <h6>Control Pannel</h6>
                     </div>
                     <div class="card-body control-panel">
-                        <label for="customRange1">Select Date to View: <span id="current-date">01-01</span></label>
+                        <label for="customRange1"><b>Date to View:</b> <span id="current-date">01-01</span></label>
                         <input type="range" id="date-slider" class="custom-range menu-item" id="customRange1" min="0" max="743" value="0">
 
                         <br>
-                        <h6 class="menu-item">Select Interpolation Method</h6>
+                        <h6 class="menu-item"><b>Interpolation Method</b></h6>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="radio-linear" name="interpol" checked>
+                            <label class="custom-control-label" for="radio-linear">Linear</label>
+                        </div>
 
-                        <div class="radio menu-item">
-                            <label><input type="radio" name="interpolation" value="Linear" checked="checked"> Linear</label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="radio-bilinear" name="interpol">
+                            <label class="custom-control-label" for="radio-bilinear">Bilinear</label>
                         </div>
-                        <div class="radio menu-item">
-                            <label><input type="radio" name="interpolation" value="BiLinear"> BiLinear</label>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="radio-cubic" name="interpol">
+                            <label class="custom-control-label" for="radio-cubic">Cubic</label>
                         </div>
-                        <div class="radio menu-item">
-                            <label><input type="radio" name="interpolation" value="Cubic"> Cubic</label>
-                        </div>
+
                     </div>
                 </div>
             </div>
