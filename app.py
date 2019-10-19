@@ -1,11 +1,26 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+
+from requests import get_data
 
 app = Flask(__name__)
 
 
 @app.route('/')
-def home():
+def request_home():
     return render_template('home.html')
+
+
+@app.route('/data')
+def request_data():
+    return render_template('data.html')
+
+
+@app.route('/get_data', methods=["POST"])
+def route_get_data():
+    if request.method == "POST":
+        # user_input_1 = request.form['user_input_1']
+        # user_input_2 = request.form['user_input_2']
+        return get_data()
 
 
 if __name__ == '__main__':
