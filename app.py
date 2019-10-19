@@ -3,6 +3,7 @@ from requests import get_charts
 import json
 app = Flask(__name__)
 
+
 with open('sample.json', 'r') as file:
     input_data = json.load(file)
 
