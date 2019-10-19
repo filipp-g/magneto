@@ -30,22 +30,36 @@ def parse_txt(path):
                 for i in range(4, len(row), 4):
                     stations[station_headers[header_index]]['data'].append(
                         (int(''.join(row[0].split('-'))), float(row[i])))
+
                     header_index = header_index + 1
         return stations
 
 
 # Very basic example of how to load data to chart.js
 # Need to add user data to post request to process data and need to split to multiple graphs
-def get_data():
-    output = []
-    for station, values in parse_txt("data/dataset1.txt").items():
+def get_charts():
+    output = {'charts': []}
+    parsed = parse_txt("data/dataset1.txt")
+    for station, values in parsed.items():
         data = []
+
         for x, y in values['data']:
             data.append({'x': x, 'y': y})
 
-        output.append({
-            'label': station,
-            'data': data
-        })
+        output['charts'].append({
+            'options':
+                {'title': {
+                    'display': 'true',
+                    'text': station}
+                },
 
+            'label': station,
+            'data': {
+                'datasets': [{
+                    'label': 'Scatter Dataset',
+                    'data': data
+                }]
+            },
+
+        })
     return json.dumps(output)
