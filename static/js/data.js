@@ -107,3 +107,11 @@ $(document).on("change", "#date-slider", function(e) {
     date = intToDate(e.target.value);
     redrawChart(date);
 });
+
+
+$(document).ready(function() {
+    $('#interpol-radio-box').change(function() {
+        selected_value = $("input[name='interpol']:checked");
+        console.log(selected_value[0].id);
+    });
+});

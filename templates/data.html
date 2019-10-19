@@ -25,23 +25,25 @@
                         <br>
                         <h6 class="menu-item"><b>Interpolation Method</b></h6>
 
-                        <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" id="radio-none" name="interpol" checked>
-                            <label class="custom-control-label" for="radio-none">None</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" id="radio-linear" name="interpol">
-                            <label class="custom-control-label" for="radio-linear">Linear</label>
-                        </div>
+                        <form id="interpol-radio-box">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="radio-none" name="interpol" checked>
+                                <label class="custom-control-label" for="radio-none">None</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="radio-linear" name="interpol">
+                                <label class="custom-control-label" for="radio-linear">Linear</label>
+                            </div>
 
-                        <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" id="radio-bilinear" name="interpol">
-                            <label class="custom-control-label" for="radio-bilinear">Bilinear</label>
-                        </div>
-                        <div class="custom-control custom-radio">
-                            <input type="radio" class="custom-control-input" id="radio-cubic" name="interpol">
-                            <label class="custom-control-label" for="radio-cubic">Cubic</label>
-                        </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="radio-bilinear" name="interpol">
+                                <label class="custom-control-label" for="radio-bilinear">Bilinear</label>
+                            </div>
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" id="radio-cubic" name="interpol">
+                                <label class="custom-control-label" for="radio-cubic">Cubic</label>
+                            </div>
+                        </form>
                         <br>
                         <a id="btn-save-data">
                             <button class="btn btn-primary">
