@@ -7,6 +7,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
+<script charset="utf-8">
+    let magneto_json = {{ magneto_json|safe }};
+</script>
+
 <body>
 <div class="jumbotron text-center">
     <h1>magneto</h1>
