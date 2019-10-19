@@ -1,7 +1,6 @@
-var map;
+var map, heatmap;
 
 function initMap() {
-    console.log(magneto_json);
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 59.991699, lng: -101.407434},
         zoom: 4.5,
@@ -326,4 +325,54 @@ function initMap() {
             }
         ]
     });
+
+    // const data_arr = getData();
+
+    console.log(magneto_json);
+
+
+    // heatmap = new google.maps.visualization.HeatmapLayer({
+    //     data: data_arr,
+    //     map: map,
+    //     radius: 9,
+    //     opacity: 1
+    // });
+
+    map.data.setStyle(function (magneto_json) {
+        let magnitude = 1000;//feature.getProperty('mag');
+        return {
+            icon: getCircle(magnitude)
+        };
+    });
+
+    // let bounds = new google.maps.LatLngBounds();
+    // for (let i = 0; i < data_arr.length; i++) {
+    //     bounds.extend(data_arr[i]);
+    // }
+    // map.fitBounds(bounds);
+}
+
+function getData() {
+    let arr = [];
+    let i = 0;
+    for (let key in magneto_json) {
+        arr[i] = new google.maps.LatLng(magneto_json[key]["lat"], magneto_json[key]["long"]);
+        i++;
+    }
+    return arr;
+}
+
+function getCircle(magnitude) {
+    return {
+        path: google.maps.SymbolPath.CIRCLE,
+        fillColor: 'red',
+        fillOpacity: .2,
+        scale: Math.pow(2, magnitude) / 2,
+        strokeColor: 'white',
+        strokeWeight: .5
+    };
+}
+
+function eqfeed_callback(magneto_json) {
+    map.data.addGeoJson(magneto_json);
 }

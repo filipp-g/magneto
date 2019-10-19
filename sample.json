@@ -1,23 +1,36 @@
 {
-  "STJ": {
-    "long": "-52.68",
-    "lat": "47.6",
-    "site_id": "",
-    "data": [
-      [101, 41.64],
-      [102, 11.57],
-      [103, 8.4],
-      [3124, 31.91]
-    ]
-  },
-  "VIC": {
-    "long": "-123.42",
-    "lat": "48.52",
-    "site_id": "",
-    "data": [
-      [101, 23.06],
-      [102, 11.06],
-      [103, 19.98]
-    ]
-  }
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [47.6, -52.68]
+      },
+      "properties": {
+        "name": "STJ",
+        "data": [
+          [101, 41.64],
+          [102, 11.57],
+          [103, 8.4],
+          [3124, 31.91]
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [48.52,-123.42]
+      },
+      "properties": {
+        "name": "VIC",
+        "data": [
+          [101, 23.06],
+          [102, 11.06],
+          [103, 19.98]
+        ]
+      }
+    }
+  ]
 }
