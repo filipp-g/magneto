@@ -45,14 +45,17 @@ $(document).ready(function() {
     chart = new Chart(ctx, {
         type: "scatter",
         options: {
+            legend: {
+                display: false
+            },
             scales: {
                 yAxes: [{
                     type: "linear",
                     position: "left",
                     ticks: {
-                        max: 600,
+                        suggestedMax: 1400,
                         min: 0,
-                        stepSize: 200,
+                        stepSize: 200
                     }
                 }],
                 xAxes: [{
@@ -70,9 +73,9 @@ $(document).ready(function() {
             }
         }
     });
-});
 
-var redraw_cache = {};
+    redrawChart("01-01");
+});
 
 function updateChart(data) {
     chart.data.labels.pop();
@@ -82,20 +85,15 @@ function updateChart(data) {
 
     chart.update({
         duration: 800,
-        easing: "easeOutBounce"
+        easing: "easeOutElastic"
     });
 }
 
 function redrawChart(date) {
-    if (date in redraw_cache) {
-        updateChart(redraw_cache[date]);
-    } else {
-        $.post("get_data", { date: date }, function(data_response, status) {
-            data_parsed = JSON.parse(data_response);
-            redraw_cache[date] = data_parsed;
-            updateChart(data_parsed);
-        });
-    }
+    $.post("get_data", { date: date }, function(data_response, status) {
+        data_parsed = JSON.parse(data_response);
+        updateChart(data_parsed);
+    });
 }
 
 // Doesnt not wait for user to release mouse
