@@ -1,18 +1,18 @@
-    html,
-    body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-    /* Always set the map height explicitly to define the size of the div
- * element that contains the map. */
-    
-    #map {
-        width: 80%;
-        height: 400px;
-        margin: 0 auto;
-    }
-    
-    .menu-item {
-        margin-bottom: 5px;
-    }
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+/* Always set the map height explicitly to define the size of the div
+* element that contains the map. */
+#map {
+    width: 70%;
+    height: 50%;
+    margin: 2em auto;
+}
+
+.menu-item {
+    margin-bottom: 5px;
+}
