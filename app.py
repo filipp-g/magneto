@@ -1,13 +1,15 @@
 from flask import Flask, render_template, request
-
 from requests import get_charts
-
+import json
 app = Flask(__name__)
+
+with open('sample.json', 'r') as file:
+    input_data = json.load(file)
 
 
 @app.route('/')
 def request_home():
-    return render_template('home.html')
+    return render_template('home.html', magneto_json=input_data)
 
 
 @app.route('/data')
