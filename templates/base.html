@@ -8,7 +8,11 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
+<script charset="utf-8">
+    let magneto_json = {{ magneto_json|safe }};
+</script>
 <body>
+
 <div class="jumbotron text-center">
     <h1>magneto</h1>
     <p>we also have a map</p>
@@ -26,7 +30,5 @@
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLieeiefNfkqBmCwm0FMLiQiXhqTM8p_k&libraries=visualization&callback=initMap"
         async sdefer></script>
-<script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/data.js') }}"></script>
 </body>
 </html>

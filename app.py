@@ -12,7 +12,7 @@ with open('sample.json', 'r') as file:
 
 @app.route('/')
 def request_home():
-    return render_template('home.html')
+    return render_template('home.html', magneto_json=input_data)
 
 
 @app.route('/data')
