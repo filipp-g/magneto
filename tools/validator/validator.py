@@ -33,7 +33,8 @@ def validate_dataset(path):
     with open(path) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter='\t')
         parsed = parse_txt(csv_reader)
-        print(parsed)
+        for location, values in parsed.items():
+            print(location)
 
 
 validate_dataset('data/dataset1.txt')
