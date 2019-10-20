@@ -1,8 +1,12 @@
+// import grid-cache from 'grid-cache.js'
+
 let map;
 let markers = [];
 let circles = [];
 let num_sites = 0;
 let total_activity = 0;
+
+// let grid = JSON.parse(fs.readFileSync('./grid-cache.js').toString());
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -54,6 +58,11 @@ function distanceInPx(pos1, pos2) {
     var d = Math.sqrt((p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y))/pixelSize;
 
     return Math.round(d);
+}
+
+
+function heatMapMaker(lat, lng, time) {
+    return (grid[lat - 30][-30 - lng][time]);
 }
 
 function createMarkers(day) {
