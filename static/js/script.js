@@ -4,16 +4,18 @@ let circles = [];
 let num_sites = 0;
 let total_activity = 0;
 
+var grid = '';
+
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 59.991699, lng: -101.407434},
-        zoom: 3.5,
+        zoom: 3.2,
         fullscreenControl: false,
         streetViewControl: false,
         mapTypeControl: false,
         scaleControl: true,
     });
-    createMarkers("01-01");
+    createMarkers(0);
 }
 
 function saveImg() {
@@ -56,9 +58,24 @@ function distanceInPx(pos1, pos2) {
     return Math.round(d);
 }
 
+
+function heatMapMaker(lat, lng, time) {
+    return (grid[lat - 30][-30 - lng][time]);
+}
+
 function createMarkers(day) {
     clearMarkers();
     let infowindow = new google.maps.InfoWindow();
+    var dayStr = intToDate(day);
+    var heatMapData = [];
+    if(grid!='') {
+        for (var lat = 30; lat < 90; lat++) {
+            for (var lng = -30; lng > -190; lng--) {
+                heatMapData.push({location: new google.maps.LatLng(lat, lng), weight: heatMapMaker(lat, lng, day)});
+            }
+        }
+    }
+
     for (let key in magneto_json) {
         let marker = new google.maps.Marker({
             position: new google.maps.LatLng(magneto_json[key]["lat"], magneto_json[key]["long"]),
@@ -70,7 +87,7 @@ function createMarkers(day) {
         });
         let circle = new google.maps.Circle({
             map: map,
-            radius: magneto_json[key]["data"][day] * 1000,    // 10 miles in metres
+            radius: magneto_json[key]["data"][dayStr] * 1000,    // 10 miles in metres
             fillColor: 'red',
             fillOpacity: .2,
             strokeColor: 'white',
@@ -78,10 +95,19 @@ function createMarkers(day) {
         });
         circle.bindTo('center', marker, 'position');
 
+        heatmap = new google.maps.visualization.HeatmapLayer({
+            data: heatMapData,
+            map: map,
+            radius: 12,
+            opacity: 0.3
+        });
+      
+        heatmap.setMap(map);
+
         google.maps.event.addListener(circle, 'click', (function (marker, i) {
             return function () {
                 let content = '<div id="infowindow"><h6>' + key + '</h6>'
-                    + '<p>' + 'magnetic field: ' + (magneto_json[key]["data"][day]).toLocaleString()
+                    + '<p>' + 'magnetic field: ' + (magneto_json[key]["data"][dayStr]).toLocaleString()
                     + '</p>'/*'Location'*/;
                 infowindow.setContent(content);
                 infowindow.open(map, marker);
@@ -94,7 +120,7 @@ function createMarkers(day) {
         });
 
         num_sites++;
-        total_activity += magneto_json[key]["data"][day];
+        total_activity += magneto_json[key]["data"][dayStr];
         setAverageActivity();
 
         markers.push(marker);
@@ -125,6 +151,10 @@ function intToDate(x) {
     return Math.floor(x / 24 + 1).pad(2) + "-" + ((x % 24) + 1).pad(2);
 }
 
+$.get('static/js/grid-cache.txt', {}, function(content){
+    grid = JSON.parse(content);
+});
+
 // Doesnt not wait for user to release mouse
 $(document).on("input", "#map-date-slider", function (e) {
     let date = intToDate(e.target.value);
@@ -133,8 +163,8 @@ $(document).on("input", "#map-date-slider", function (e) {
 
 // Waits for user to release mouse
 $(document).on("change", "#map-date-slider", function (e) {
-    let date = intToDate(e.target.value);
-    createMarkers(date);
+    // let date = intToDate(e.target.value);
+    createMarkers(e.target.value);
 });
 
 function setAverageActivity() {
