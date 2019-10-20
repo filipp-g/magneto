@@ -1,4 +1,4 @@
-let heatmap;
+let heatMap;
 let markers = [];
 let circles = [];
 let num_sites = 0;
@@ -7,70 +7,70 @@ let total_activity = 0;
 var grid = "";
 
 function initMap() {
-    heatmap = new google.maps.Map(document.getElementById("heatmap"), {
+    heatMap = new google.maps.Map(document.getElementById("map"), {
         center: {lat: 59.991699, lng: -101.407434},
         zoom: 3.2,
-        fullscreenControl: false,
-        streetViewControl: false,
-        mapTypeControl: false,
+        // fullscreenControl: false,
+        // streetViewControl: false,
+        // mapTypeControl: false,
         scaleControl: true
     });
     createMarkers(0);
 }
 
-function saveImg() {
-    var zoom = heatmap.zoom;
-    var centre = heatmap.getBounds().getCenter();
-    var spherical = google.maps.geometry.spherical;
-    bounds = heatmap.getBounds();
-    var cor1 = bounds.getNorthEast();
-    var cor2 = bounds.getSouthWest();
-    var cor3 = new google.maps.LatLng(cor2.lat(), cor1.lng());
-    var cor4 = new google.maps.LatLng(cor1.lat(), cor2.lng());
+// function saveImg() {
+//     var zoom = heatMap.zoom;
+//     var centre = heatMap.getBounds().getCenter();
+//     var spherical = google.maps.geometry.spherical;
+//     bounds = heatMap.getBounds();
+//     var cor1 = bounds.getNorthEast();
+//     var cor2 = bounds.getSouthWest();
+//     var cor3 = new google.maps.LatLng(cor2.lat(), cor1.lng());
+//     var cor4 = new google.maps.LatLng(cor1.lat(), cor2.lng());
+//
+//     var width = distanceInPx(cor1, cor4);
+//     var height = distanceInPx(cor1, cor3);
+//
+//     var imgUrl =
+//         "https://maps.googleapis.com/maps/api/staticmap?center=" +
+//         centre.lat() +
+//         "," +
+//         centre.lng() +
+//         "&zoom=" +
+//         zoom +
+//         "&size=" +
+//         width +
+//         "x" +
+//         height +
+//         "&maptype=terrain&key=AIzaSyDLieeiefNfkqBmCwm0FMLiQiXhqTM8p_k";
+//
+//     for (let i = 0; i < markers.length; i++) {
+//         imgUrl +=
+//             "&markers=color:red|" +
+//             markers[i].getPosition().lat() +
+//             "," +
+//             markers[i].getPosition().lng();
+//     }
+//
+//     imgUrl += ".jpg";
+//
+//     var link = document.getElementById("staticLink");
+//     link.setAttribute("href", imgUrl);
+//     link.style.display = "block";
+// }
 
-    var width = distanceInPx(cor1, cor4);
-    var height = distanceInPx(cor1, cor3);
-
-    var imgUrl =
-        "https://maps.googleapis.com/maps/api/staticmap?center=" +
-        centre.lat() +
-        "," +
-        centre.lng() +
-        "&zoom=" +
-        zoom +
-        "&size=" +
-        width +
-        "x" +
-        height +
-        "&maptype=terrain&key=AIzaSyDLieeiefNfkqBmCwm0FMLiQiXhqTM8p_k";
-
-    for (let i = 0; i < markers.length; i++) {
-        imgUrl +=
-            "&markers=color:red|" +
-            markers[i].getPosition().lat() +
-            "," +
-            markers[i].getPosition().lng();
-    }
-
-    imgUrl += ".jpg";
-
-    var link = document.getElementById("staticLink");
-    link.setAttribute("href", imgUrl);
-    link.style.display = "block";
-}
-
-function distanceInPx(pos1, pos2) {
-    var p1 = heatmap.getProjection().fromLatLngToPoint(pos1);
-    var p2 = heatmap.getProjection().fromLatLngToPoint(pos2);
-
-    var pixelSize = Math.pow(2, -heatmap.getZoom());
-
-    var d =
-        Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y)) /
-        pixelSize;
-
-    return Math.round(d);
-}
+// function distanceInPx(pos1, pos2) {
+//     var p1 = heatMap.getProjection().fromLatLngToPoint(pos1);
+//     var p2 = heatMap.getProjection().fromLatLngToPoint(pos2);
+//
+//     var pixelSize = Math.pow(2, -heatMap.getZoom());
+//
+//     var d =
+//         Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y)) /
+//         pixelSize;
+//
+//     return Math.round(d);
+// }
 
 function heatMapMaker(lat, lng, time) {
     return grid[parseInt(lat) - 30][-30 - parseInt(lng)][parseInt(time)];
@@ -78,7 +78,7 @@ function heatMapMaker(lat, lng, time) {
 
 function createMarkers(day) {
     clearMarkers();
-    let infowindow = new google.maps.InfoWindow();
+    // let infowindow = new google.maps.InfoWindow();
     var dayStr = intToDate(day);
     var heatMapData = [];
 
@@ -94,76 +94,70 @@ function createMarkers(day) {
                     heatmap_magneto_json[key]["long"], day)
             });
         }
-        let marker = new google.maps.Marker({
-            position: new google.maps.LatLng(
-                heatmap_magneto_json[key]["lat"],
-                heatmap_magneto_json[key]["long"]
-            ),
-            icon: {
-                path: google.maps.SymbolPath.CIRCLE,
-                scale: 0
-            },
-            map: heatmap
-        });
-        let circle = new google.maps.Circle({
-            map: heatmap,
-            radius: 50000, // 10 miles in metres
-            fillColor: "black",
-            fillOpacity: 1,
-            strokeColor: "white",
-            strokeWeight: 0.5
-        });
-        circle.bindTo("center", marker, "position");
+        // let marker = new google.maps.Marker({
+        //     position: new google.maps.LatLng(
+        //         heatmap_magneto_json[key]["lat"],
+        //         heatmap_magneto_json[key]["long"]
+        //     ),
+        //     icon: {
+        //         path: google.maps.SymbolPath.CIRCLE,
+        //         scale: 0
+        //     },
+        //     map: heatMap
+        // });
+        // let circle = new google.maps.Circle({
+        //     map: heatMap,
+        //     radius: 50000, // 10 miles in metres
+        //     fillColor: "black",
+        //     fillOpacity: 1,
+        //     strokeColor: "white",
+        //     strokeWeight: 0.5
+        // });
+        // circle.bindTo("center", marker, "position");
 
-        heatmap = new google.maps.visualization.HeatmapLayer({
+        heatMap = new google.maps.visualization.HeatmapLayer({
             data: heatMapData,
-            map: heatmap,
+            map: heatMap,
             radius: 100,
             opacity: 0.05
         });
 
 
-        google.maps.event.addListener(
-            circle,
-            "click",
-            (function (marker, i) {
-                return function () {
-                    let content =
-                        '<div id="infowindow"><h6>' +
-                        key +
-                        "</h6>" +
-                        "<p>" +
-                        "magnetic field: " +
-                        heatmap_magneto_json[key]["data"][dayStr].toLocaleString() +
-                        "</p>"; /*'Location'*/
-                    infowindow.setContent(content);
-                    infowindow.open(heatmap, marker);
-                    heatmap.panTo(marker.position);
-                };
-            })(marker, num_sites)
-        );
-        document.getElementById("staticLink").addEventListener("click", function () {
-            saveImg();
-        });
+        // google.maps.event.addListener(
+        //     circle,
+        //     "click",
+        //     (function (marker, i) {
+        //         return function () {
+        //             let content =
+        //                 '<div id="infowindow"><h6>' +
+        //                 key +
+        //                 "</h6>" +
+        //                 "<p>" +
+        //                 "magnetic field: " +
+        //                 heatmap_magneto_json[key]["data"][dayStr].toLocaleString() +
+        //                 "</p>"; /*'Location'*/
+        //             infowindow.setContent(content);
+        //             infowindow.open(heatMap, marker);
+        //             heatMap.panTo(marker.position);
+        //         };
+        //     })(marker, num_sites)
+        // );
+        // document.getElementById("staticLink").addEventListener("click", function () {
+        //     saveImg();
+        // });
 
         num_sites++;
         total_activity += heatmap_magneto_json[key]["data"][dayStr];
         setAverageActivity();
 
-        markers.push(marker);
-        circles.push(circle);
+        // markers.push(marker);
+        // circles.push(circle);
     }
 }
 
 function clearMarkers() {
     num_sites = 0;
     total_activity = 0;
-    for (let i = 0; i < markers.length; i++) {
-        markers[i].setMap(null);
-        circles[i].setMap(null);
-    }
-    markers = [];
-    circles = [];
 }
 
 Number.prototype.pad = function (size) {
@@ -185,7 +179,7 @@ $.get("static/js/grid-cache.txt", {}, function (content) {
 // Doesnt not wait for user to release mouse
 $(document).on("input", "#heatmap-date-slider", function (e) {
     let date = intToDate(e.target.value);
-    $("#map-current-date").text(date);
+    $("#heatmap-current-date").text(date);
 });
 
 // Waits for user to release mouse

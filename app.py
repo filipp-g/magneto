@@ -13,6 +13,11 @@ def request_home():
     return render_template('home.html', magneto_json=input_data)
 
 
+@app.route('/heatmap')
+def request_heatmap():
+    return render_template('heatmap.html', magneto_json=input_data)
+
+
 @app.route('/data')
 def request_data():
     return render_template('data.html')

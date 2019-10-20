@@ -2,13 +2,14 @@
 
 {% block content %}
     <script charset="utf-8">
-        let magneto_json = {{ magneto_json|safe }};
+        let heatmap_magneto_json = {{ magneto_json|safe }};
     </script>
 
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-between">
         <a class="navbar-nav navbar-brand" href="#">magneto</a>
         <div class="navbar-nav">
-            <a id="map-link" class="nav-item nav-link active" href="#">Map</a>
+            <a id="map-link" class="nav-item nav-link" href="/">Map</a>
+            <a id="heatmap-link" class="nav-item nav-link active" href="#">Heatmap</a>
             <a id="graph-link" class="nav-item nav-link" href="/data">Graph</a>
             <a id="graph-link" class="nav-item nav-link" href="/outliers">Outliers</a>
             <a id="map-link" class="nav-item nav-link" href="/about">About</a>
@@ -23,10 +24,10 @@
                         <h6>Control Panel</h6>
                     </div>
                     <div class="card-body control-panel">
-                        <label for="map-date-slider"><b>Date to View:</b>
-                            <span id="map-current-date">01-01</span>
+                        <label for="heatmap-date-slider"><b>Date to View:</b>
+                            <span id="heatmap-current-date">01-01</span>
                         </label>
-                        <input type="range" id="map-date-slider" class="custom-range menu-item" min="0" max="743"
+                        <input type="range" id="heatmap-date-slider" class="custom-range menu-item" min="0" max="743"
                                value="0">
                         <label><b>Average Geomagnetic Activity:</b>
                             <span id="map-average-activity">0</span>
@@ -55,6 +56,6 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLieeiefNfkqBmCwm0FMLiQiXhqTM8p_k&libraries=visualization&callback=initMap"
             async sdefer></script>
+    <script src="{{ url_for('static', filename='js/heat-map.js') }}"></script>
     <script src="{{ url_for('static', filename='js/grid-cache.js') }}" type="module"></script>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 {% endblock %}
