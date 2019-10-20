@@ -1,11 +1,17 @@
-var map;
+let map;
+let markers = [];
+let circles = [];
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 59.991699, lng: -101.407434},
         zoom: 3.5,
     });
+    createMarkers("01-01");
+}
 
+function createMarkers(day) {
+    clearMarkers();
     for (let key in magneto_json) {
         let marker = new google.maps.Marker({
             position: new google.maps.LatLng(magneto_json[key]["lat"], magneto_json[key]["long"]),
@@ -17,12 +23,35 @@ function initMap() {
         });
         let circle = new google.maps.Circle({
             map: map,
-            radius: magneto_json[key]["data"][0][0] * 1000,    // 10 miles in metres
+            radius: magneto_json[key]["data"][day] * 1000,    // 10 miles in metres
             fillColor: 'red',
             fillOpacity: .2,
             strokeColor: 'white',
             strokeWeight: .5
         });
         circle.bindTo('center', marker, 'position');
+        markers.push(marker);
+        circles.push(circle);
     }
 }
+
+function clearMarkers() {
+    for (let i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+        circles[i].setMap(null);
+    }
+    markers = [];
+    circles = [];
+}
+
+// Doesnt not wait for user to release mouse
+$(document).on("input", "#map-date-slider", function (e) {
+    let date = intToDate(e.target.value);
+    $("#map-current-date").text(date);
+});
+
+// Waits for user to release mouse
+$(document).on("change", "#map-date-slider", function (e) {
+    let date = intToDate(e.target.value);
+    createMarkers(date);
+});
