@@ -3,7 +3,7 @@ from mpl_toolkits.mplot3d import Axes3D, proj3d
 from scipy.interpolate import griddata
 import matplotlib.pyplot as plt
 import numpy as np
-from tools.csaparser import parse_txt
+from our_tools.csaparser import parse_txt
 
 full = parse_txt("../data/dataset2_full.txt")
 
@@ -64,3 +64,10 @@ for loc, value in full.items():
         print("Interpolated ", rev_lookup(result,lat,long,time_cnt))
 
         time_cnt = time_cnt + 1
+
+
+
+
+
+
+

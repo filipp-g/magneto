@@ -24,7 +24,9 @@ def request_data():
 def route_get_data():
     if request.method == "POST":
         date = request.form['date']
-        return get_chart(date)
+        interpol = request.form['interpol']
+        print(interpol)
+        return get_chart(date, interpol)
 
 
 if __name__ == '__main__':

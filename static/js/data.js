@@ -89,11 +89,18 @@ function updateChart(data) {
     });
 }
 
-function redrawChart(date) {
-    $.post("get_data", { date: date }, function(data_response, status) {
-        data_parsed = JSON.parse(data_response);
-        updateChart(data_parsed);
-    });
+function redrawChart() {
+    date = intToDate($("#date-slider")[0].value);
+    $.post(
+        "get_data", {
+            date: date,
+            interpol: $("input[name='interpol']:checked")[0].id
+        },
+        function(data_response, status) {
+            data_parsed = JSON.parse(data_response);
+            updateChart(data_parsed);
+        }
+    );
 }
 
 // Doesnt not wait for user to release mouse
@@ -105,13 +112,11 @@ $(document).on("input", "#date-slider", function(e) {
 // Waits for user to release mouse
 $(document).on("change", "#date-slider", function(e) {
     date = intToDate(e.target.value);
-    redrawChart(date);
+    redrawChart();
 });
 
-
 $(document).ready(function() {
-    $('#interpol-radio-box').change(function() {
-        selected_value = $("input[name='interpol']:checked");
-        console.log(selected_value[0].id);
+    $("#interpol-radio-box").change(function() {
+        redrawChart();
     });
 });

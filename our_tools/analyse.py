@@ -4,7 +4,7 @@ import json
 
 from scipy.interpolate import interp1d
 
-from tools.csaparser import parse_txt
+from our_tools.csaparser import parse_txt
 import numpy as np
 from scipy import interpolate
 
