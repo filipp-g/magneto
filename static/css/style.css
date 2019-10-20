@@ -18,3 +18,8 @@ body {
 .menu-item {
     margin-bottom: 5px;
 }
+
+.rounded-circle {
+    max-width: 200px;
+    max-height: 200px;
+}
