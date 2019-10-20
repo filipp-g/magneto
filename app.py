@@ -2,7 +2,7 @@ import json
 
 from flask import Flask, render_template, request
 
-from requests import get_chart
+from requests import get_chart, get_outliers_chart, get_stations_chart
 
 app = Flask(__name__)
 
