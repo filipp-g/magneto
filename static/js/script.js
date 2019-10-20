@@ -4,8 +4,6 @@ let circles = [];
 let num_sites = 0;
 let total_activity = 0;
 
-var grid = '';
-
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 59.991699, lng: -101.407434},
@@ -58,23 +56,10 @@ function distanceInPx(pos1, pos2) {
     return Math.round(d);
 }
 
-
-function heatMapMaker(lat, lng, time) {
-    return (grid[lat - 30][-30 - lng][time]);
-}
-
 function createMarkers(day) {
     clearMarkers();
     let infowindow = new google.maps.InfoWindow();
     var dayStr = intToDate(day);
-    var heatMapData = [];
-    if(grid!='') {
-        for (var lat = 30; lat < 90; lat++) {
-            for (var lng = -30; lng > -190; lng--) {
-                heatMapData.push({location: new google.maps.LatLng(lat, lng), weight: heatMapMaker(lat, lng, day)});
-            }
-        }
-    }
 
     for (let key in magneto_json) {
         let marker = new google.maps.Marker({
@@ -94,15 +79,6 @@ function createMarkers(day) {
             strokeWeight: .5
         });
         circle.bindTo('center', marker, 'position');
-
-        heatmap = new google.maps.visualization.HeatmapLayer({
-            data: heatMapData,
-            map: map,
-            radius: 12,
-            opacity: 0.3
-        });
-      
-        heatmap.setMap(map);
 
         google.maps.event.addListener(circle, 'click', (function (marker, i) {
             return function () {
@@ -150,10 +126,6 @@ Number.prototype.pad = function (size) {
 function intToDate(x) {
     return Math.floor(x / 24 + 1).pad(2) + "-" + ((x % 24) + 1).pad(2);
 }
-
-$.get('static/js/grid-cache.txt', {}, function(content){
-    grid = JSON.parse(content);
-});
 
 // Doesnt not wait for user to release mouse
 $(document).on("input", "#map-date-slider", function (e) {
