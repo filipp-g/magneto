@@ -6,12 +6,18 @@ function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
         center: {lat: 59.991699, lng: -101.407434},
         zoom: 3.5,
+        fullscreenControl: false,
+        streetViewControl: false,
+        mapTypeControl: false,
+        scaleControl: true
     });
     createMarkers("01-01");
 }
 
 function createMarkers(day) {
     clearMarkers();
+    let i = 0;
+    let infowindow = new google.maps.InfoWindow();
     for (let key in magneto_json) {
         let marker = new google.maps.Marker({
             position: new google.maps.LatLng(magneto_json[key]["lat"], magneto_json[key]["long"]),
@@ -30,8 +36,17 @@ function createMarkers(day) {
             strokeWeight: .5
         });
         circle.bindTo('center', marker, 'position');
+
+        google.maps.event.addListener(circle, 'click', (function (marker, i) {
+            return function () {
+                infowindow.setContent('<div id="infowindow"><h6>' + key + '</h6>' + '<p>' + 'magnetic field: ' + (magneto_json[key]["data"][0][1]).toLocaleString() + '</p>'/*'Location'*/);
+                infowindow.open(map, marker);
+                map.panTo(marker.position);
+            }
+        })(marker, i));
         markers.push(marker);
         circles.push(circle);
+        i++;
     }
 }
 
