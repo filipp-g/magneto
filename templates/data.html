@@ -1,70 +1,82 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-between">
+    <a class="navbar-nav navbar-brand" href="#">magneto</a>
+    <div class="navbar-nav">
+        <a id="map-link" class="nav-item nav-link" href="/">Map</a>
+        <a id="graph-link" class="nav-item nav-link active" href="#">Graph</a>
+        <a id="map-link" class="nav-item nav-link" href="/about">About</a>
+    </div>
+</nav>
 
-{% block content %}
-    <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-between">
-        <a class="navbar-nav navbar-brand" href="#">magneto</a>
-        <div class="navbar-nav">
-            <a id="map-link" class="nav-item nav-link" href="/">Map</a>
-            <a id="graph-link" class="nav-item nav-link active" href="#">Graph</a>
-            <a id="map-link" class="nav-item nav-link" href="/about">About</a>
-        </div>
-    </nav>
+<div class="container">
+    <div class="row p-3">
+        <div class="col-3">
+            <div class="card shadow mb-4">
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6>Control Panel</h6>
+                </div>
+                <div class="card-body control-panel">
+                    <label for="customRange1"><b>Date to View:</b> <span id="current-date">01-01</span></label>
+                    <input type="range" id="date-slider" class="custom-range menu-item" id="customRange1" min="0" max="743" value="0">
+                    <br>
+                    <h6 class="menu-item"><b>Outlier Detection</b></h6>
 
-    <div class="container">
-        <div class="row p-3">
-            <div class="col-3">
-                <div class="card shadow mb-4">
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6>Control Panel</h6>
-                    </div>
-                    <div class="card-body control-panel">
-                        <label for="customRange1"><b>Date to View:</b> <span id="current-date">01-01</span></label>
-                        <input type="range" id="date-slider" class="custom-range menu-item" id="customRange1" min="0"
-                               max="743" value="0">
-                        <br>
-                        <h6 class="menu-item"><b>Interpolation Method</b></h6>
+                    <form id="outlier-radio-box">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="radio-outlier-none" name="outlier" checked>
+                            <label class="custom-control-label" for="radio-outlier-none">None</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="radio-outlier-zscore" name="outlier">
+                            <label class="custom-control-label" for="radio-outlier-zscore">Z-Score</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="radio-outlier-IQR" name="outlier">
+                            <label class="custom-control-label" for="radio-outlier-IQR">IQR</label>
+                        </div>
+                    </form>
+                    <br>
+                    <h6 class="menu-item"><b>Interpolate Missing Data</b></h6>
+                    <form id="interpol-radio-box">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="radio-none" name="interpol" checked>
+                            <label class="custom-control-label" for="radio-none">None</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="radio-linear" name="interpol">
+                            <label class="custom-control-label" for="radio-linear">Linear</label>
+                        </div>
 
-                        <form id="interpol-radio-box">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" id="radio-none" name="interpol"
-                                       checked>
-                                <label class="custom-control-label" for="radio-none">None</label>
-                            </div>
-                            <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" id="radio-linear" name="interpol">
-                                <label class="custom-control-label" for="radio-linear">Linear</label>
-                            </div>
-
-                            <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" id="radio-bilinear" name="interpol">
-                                <label class="custom-control-label" for="radio-bilinear">Bilinear</label>
-                            </div>
-                            <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" id="radio-cubic" name="interpol">
-                                <label class="custom-control-label" for="radio-cubic">Cubic</label>
-                            </div>
-                        </form>
-                        <br>
-                        <a id="btn-save-data">
-                            <button class="btn btn-primary">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="radio-bilinear" name="interpol">
+                            <label class="custom-control-label" for="radio-bilinear">Bilinear</label>
+                        </div>
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" id="radio-cubic" name="interpol">
+                            <label class="custom-control-label" for="radio-cubic">Cubic</label>
+                        </div>
+                    </form>
+                    <br>
+                    <a id="btn-save-data">
+                        <button class="btn btn-primary">
                                 <i class="fa fa-save fa-lg"></i> Save Data
                             </button>
-                        </a>
-                    </div>
+                    </a>
                 </div>
             </div>
-            <div class="col-9">
-                <div class="card shadow mb-4">
-                    <!-- Card Header - Dropdown -->
-                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                        <h6>Interpolation Station</h6>
-                    </div>
-                    <!-- Card Body -->
-                    <div class="card-body">
-                        <canvas id="canvas"></canvas>
-                    </div>
+        </div>
+        <div class="col-9">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6>Interpolation Station</h6>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body">
+                    <canvas id="canvas"></canvas>
                 </div>
             </div>
         </div>
     </div>
+</div>
 {% endblock %}

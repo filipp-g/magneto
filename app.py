@@ -25,8 +25,8 @@ def route_get_data():
     if request.method == "POST":
         date = request.form['date']
         interpol = request.form['interpol']
-        print(interpol)
-        return get_chart(date, interpol)
+        outlier = request.form['outlier']
+        return get_chart(date, outlier,interpol)
 
 
 @app.route('/about')

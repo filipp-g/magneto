@@ -44,6 +44,7 @@ $(document).ready(function() {
     var ctx = $("#canvas");
     chart = new Chart(ctx, {
         type: "scatter",
+        data: { labels: ["Good", "Outliers"], datasets: [] },
         options: {
             legend: {
                 display: false
@@ -74,14 +75,14 @@ $(document).ready(function() {
         }
     });
 
-    redrawChart("01-01");
+    redrawChart();
 });
 
 function updateChart(data) {
-    chart.data.labels.pop();
     chart.data.datasets.pop();
-    chart.data.labels.push(data_parsed["data"]["label"]);
-    chart.data.datasets.push(data_parsed["data"]["datasets"]);
+    chart.data.datasets.pop();
+    chart.data.datasets.push(data["datasets"][0]);
+    chart.data.datasets.push(data["datasets"][1]);
 
     chart.update({
         duration: 800,
@@ -94,7 +95,8 @@ function redrawChart() {
     $.post(
         "get_data", {
             date: date,
-            interpol: $("input[name='interpol']:checked")[0].id
+            interpol: $("input[name='interpol']:checked")[0].id,
+            outlier: $("input[name='outlier']:checked")[0].id
         },
         function(data_response, status) {
             data_parsed = JSON.parse(data_response);
@@ -117,6 +119,9 @@ $(document).on("change", "#date-slider", function(e) {
 
 $(document).ready(function() {
     $("#interpol-radio-box").change(function() {
+        redrawChart();
+    });
+    $("#outlier-radio-box").change(function() {
         redrawChart();
     });
 });

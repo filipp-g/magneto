@@ -4,7 +4,8 @@
 import numpy as np
 
 
-def zscore(dataset, threshold=3):
+def zscore(points, threshold=3):
+    dataset = [y for x, y in points]
     mean = np.mean(dataset)
     std = np.std(dataset)
     outliers = []
@@ -18,7 +19,8 @@ def zscore(dataset, threshold=3):
 
 
 # inter quartile range
-def IQR(dataset):
+def IQR(points):
+    dataset = [y for x, y in points]
     outliers = []
     sorted_data = sorted(dataset)
     q1, q3 = np.percentile(sorted_data, [25, 75])
@@ -31,12 +33,24 @@ def IQR(dataset):
             outliers.append(1)
         else:
             outliers.append(0)
-
     return outliers
 
 
-dataset = [10, 12, 12, 13, 12, 11, 14, 13, 15, 10, 10, 10, 100, 12, 14, 13, 12, 10, 10, 11, 12, 15, 12, 13, 12, 11, 14,
-           13, 15, 10, 15, 12, 10, 14, 13, 15, 10]
-outliers = IQR(dataset)
-for data, is_outlier in zip(dataset, outliers):
-    print(data, is_outlier)
+def _seperate(data, outlier_list):
+    output = ([], [])
+    for e, outlier in zip(data, outlier_list):
+        if outlier == 1:
+            output[1].append(e)
+        else:
+            output[0].append(e)
+    return output
+
+
+# Take points as a list of pairs
+# returns a pair of lists with ([good points],[outliers])
+def calc_outliers(points, method):
+    if "zscore" in method:
+        return _seperate(points, zscore(points))
+    elif "IQR" in method:
+        return _seperate(points, IQR(points))
+    return (points, [])
