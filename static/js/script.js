@@ -1,6 +1,8 @@
 let map;
 let markers = [];
 let circles = [];
+let num_sites = 0;
+let total_activity = 0;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -16,7 +18,6 @@ function initMap() {
 
 function createMarkers(day) {
     clearMarkers();
-    let i = 0;
     let infowindow = new google.maps.InfoWindow();
     for (let key in magneto_json) {
         let marker = new google.maps.Marker({
@@ -39,24 +40,45 @@ function createMarkers(day) {
 
         google.maps.event.addListener(circle, 'click', (function (marker, i) {
             return function () {
-                infowindow.setContent('<div id="infowindow"><h6>' + key + '</h6>' + '<p>' + 'magnetic field: ' + (magneto_json[key]["data"][0][1]).toLocaleString() + '</p>'/*'Location'*/);
+                let content = '<div id="infowindow"><h6>' + key + '</h6>'
+                    + '<p>' + 'magnetic field: ' + (magneto_json[key]["data"][day]).toLocaleString()
+                    + '</p>'/*'Location'*/;
+                infowindow.setContent(content);
                 infowindow.open(map, marker);
                 map.panTo(marker.position);
             }
-        })(marker, i));
+        })(marker, num_sites));
+
+        num_sites++;
+        total_activity += magneto_json[key]["data"][day];
+        setAverageActivity();
+
         markers.push(marker);
         circles.push(circle);
-        i++;
     }
 }
 
 function clearMarkers() {
+    num_sites = 0;
+    total_activity = 0;
     for (let i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
         circles[i].setMap(null);
     }
     markers = [];
     circles = [];
+}
+
+Number.prototype.pad = function (size) {
+    var s = String(this);
+    while (s.length < (size || 2)) {
+        s = "0" + s;
+    }
+    return s;
+};
+
+function intToDate(x) {
+    return Math.floor(x / 24 + 1).pad(2) + "-" + ((x % 24) + 1).pad(2);
 }
 
 // Doesnt not wait for user to release mouse
@@ -69,4 +91,14 @@ $(document).on("input", "#map-date-slider", function (e) {
 $(document).on("change", "#map-date-slider", function (e) {
     let date = intToDate(e.target.value);
     createMarkers(date);
+});
+
+function setAverageActivity() {
+    $("#map-average-activity").text((total_activity / num_sites).toFixed(4));
+}
+
+$(document).ready(function () {
+    let slider = $("#map-date-slider");
+    slider[0].value = 0;
+    slider.focus();
 });

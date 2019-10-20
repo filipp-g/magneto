@@ -118,10 +118,15 @@ $(document).on("change", "#date-slider", function(e) {
 });
 
 $(document).ready(function() {
+    let slider = $("#date-slider");
+    slider[0].value = 0;
+    slider.focus();
     $("#interpol-radio-box").change(function() {
         redrawChart();
+        slider.focus();
     });
     $("#outlier-radio-box").change(function() {
         redrawChart();
+        slider.focus();
     });
 });
