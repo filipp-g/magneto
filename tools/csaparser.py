@@ -1,5 +1,6 @@
 # Given a path to data file. parse it into a map
 import csv
+import json
 
 
 def parse_txt(path):
@@ -19,8 +20,8 @@ def parse_txt(path):
                 for i in range(4, len(row), 4):
                     station_headers.append(row[i])
                     stations[row[i]] = {
-                        'long': row[i + 1],
-                        'lat': row[i + 2],
+                        'long': float(row[i + 1]),
+                        'lat': float(row[i + 2]),
                         'site_id': row[i + 3] if i + 3 < len(row) else '',
                         'data': {}
                     }
