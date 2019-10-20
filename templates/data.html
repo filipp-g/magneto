@@ -1,6 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-between">
+        <a class="navbar-nav navbar-brand" href="#">magneto</a>
+        <div class="navbar-nav">
+            <a id="map-link" class="nav-item nav-link" href="/">Map</a>
+            <a id="graph-link" class="nav-item nav-link active" href="#">Graph</a>
+            <a id="map-link" class="nav-item nav-link" href="/about">About</a>
+        </div>
+    </nav>
+
     <div class="container">
         <div class="row p-3">
             <div class="col-3">
@@ -17,7 +26,8 @@
 
                         <form id="interpol-radio-box">
                             <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" id="radio-none" name="interpol" checked>
+                                <input type="radio" class="custom-control-input" id="radio-none" name="interpol"
+                                       checked>
                                 <label class="custom-control-label" for="radio-none">None</label>
                             </div>
                             <div class="custom-control custom-radio">

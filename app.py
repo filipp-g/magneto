@@ -27,5 +27,10 @@ def route_get_data():
         return get_chart(date)
 
 
+@app.route('/about')
+def request_about():
+    return render_template('about.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
