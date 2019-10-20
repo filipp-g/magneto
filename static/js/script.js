@@ -11,9 +11,49 @@ function initMap() {
         fullscreenControl: false,
         streetViewControl: false,
         mapTypeControl: false,
-        scaleControl: true
+        scaleControl: true,
     });
     createMarkers("01-01");
+}
+
+function saveImg() {
+
+    var zoom = map.zoom;
+    var centre = map.getBounds().getCenter();
+    var spherical = google.maps.geometry.spherical;
+    bounds = map.getBounds();
+    var cor1 = bounds.getNorthEast();
+    var cor2 = bounds.getSouthWest();
+    var cor3 = new google.maps.LatLng(cor2.lat(), cor1.lng()); 
+    var cor4 = new google.maps.LatLng(cor1.lat(), cor2.lng());
+
+    var width = distanceInPx(cor1, cor4);
+    var height = distanceInPx(cor1, cor3);
+
+    var imgUrl = "https://maps.googleapis.com/maps/api/staticmap?center=" + 
+        centre.lat() + "," + centre.lng() + "&zoom=" + zoom + 
+        "&size=" + width + "x" + height + "&maptype=terrain&key=AIzaSyDLieeiefNfkqBmCwm0FMLiQiXhqTM8p_k"; 
+    
+    for (let i = 0; i < markers.length; i++) {
+        imgUrl += "&markers=color:red|" + markers[i].getPosition().lat() + "," + markers[i].getPosition().lng();
+    }
+
+    imgUrl += ".jpg";
+
+    var link = document.getElementById('staticLink');
+    link.setAttribute("href", imgUrl);
+    link.style.display="block"; 
+}
+
+function distanceInPx(pos1, pos2) {
+    var p1 = map.getProjection().fromLatLngToPoint(pos1);
+    var p2 = map.getProjection().fromLatLngToPoint(pos2);
+
+    var pixelSize = Math.pow(2, -map.getZoom());
+
+    var d = Math.sqrt((p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y))/pixelSize;
+
+    return Math.round(d);
 }
 
 function createMarkers(day) {
@@ -48,6 +88,10 @@ function createMarkers(day) {
                 map.panTo(marker.position);
             }
         })(marker, num_sites));
+        document.getElementById("staticLink").addEventListener("click", function(){
+            // document.getElementById("demo").innerHTML = "Hello World";
+            saveImg();
+        });
 
         num_sites++;
         total_activity += magneto_json[key]["data"][day];
