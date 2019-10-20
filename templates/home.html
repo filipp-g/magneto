@@ -1,9 +1,36 @@
+<script charset="utf-8">
+    let magneto_json = {{ magneto_json|safe }};
+</script>
+
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class="embed-responsive embed-responsive-4by3">
-        <div id="map-container" class="embed-responsive-item">
-            <div id="map"></div>
+    <div class="container">
+        <div class="row p-3">
+            <div class="col-3">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6>Control Panel</h6>
+                    </div>
+                    <div class="card-body control-panel">
+                        <label for="map-date-slider"><b>Date to View:</b> <span
+                                id="map-current-date">01-01</span></label>
+                        <input type="range" id="map-date-slider" class="custom-range menu-item" min="0" max="743"
+                               value="0">
+                    </div>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="card shadow mb-4">
+                    <div class="card-body map-card-body">
+                        <div class="embed-responsive embed-responsive-4by3">
+                            <div id="map-container" class="embed-responsive-item">
+                                <div id="map"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}

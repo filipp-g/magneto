@@ -7,10 +7,12 @@ body {
 
 /* Always set the map height explicitly to define the size of the div
 * element that contains the map. */
+.map-card-body {
+    height: 480px;
+}
+
 #map {
-    width: 70%;
-    height: 50%;
-    margin: 2em auto;
+    height: 77%;
 }
 
 .menu-item {

@@ -5,27 +5,19 @@
     <title>Magneto</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-
-<script charset="utf-8">
-    let magneto_json = {{ magneto_json|safe }};
-</script>
 
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">magneto</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="collapse navbar-collapse">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="/">Map<span class="sr-only">(current)</span></a>
-            <a class="nav-item nav-link" href="/data">Graph</a>
+            <a id="map-link" class="nav-item nav-link" href="/">Map</a>
+            <a id="graph-link" class="nav-item nav-link" href="/data">Graph</a>
         </div>
     </div>
 </nav>
@@ -33,7 +25,6 @@
 {% block content %}{% endblock %}
 
 <!-- Optional JavaScript -->
-<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
@@ -42,6 +33,7 @@
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLieeiefNfkqBmCwm0FMLiQiXhqTM8p_k&libraries=visualization&callback=initMap"
         async sdefer></script>
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 <script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/data.js') }}"></script>
 </body>
