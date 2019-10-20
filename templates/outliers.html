@@ -1,6 +1,14 @@
 {% extends 'base.html' %}
-
 {% block content %}
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-between">
+    <a class="navbar-nav navbar-brand" href="#">magneto</a>
+    <div class="navbar-nav">
+        <a id="map-link" class="nav-item nav-link" href="/">Map</a>
+        <a id="graph-link" class="nav-item nav-link" href="#">Graph</a>
+        <a id="graph-link" class="nav-item nav-link active" href="#">Outliers</a>
+        <a id="map-link" class="nav-item nav-link" href="/about">About</a>
+    </div>
+</nav>
 <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/outliers.js') }}"></script>
 <script src="{{ url_for('static', filename='js/script.js') }}"></script>
