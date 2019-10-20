@@ -107,7 +107,7 @@ function createMarkers(day) {
         });
         let circle = new google.maps.Circle({
             map: map,
-            radius: 1000, // 10 miles in metres
+            radius: 50000, // 10 miles in metres
             fillColor: "black",
             fillOpacity: 1,
             strokeColor: "white",
