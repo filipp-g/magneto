@@ -1,6 +1,6 @@
 import requests as r
 import numpy as np
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import json
 import otools.longlat_dist as lld
 from math import sqrt
