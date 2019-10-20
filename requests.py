@@ -5,6 +5,21 @@ import json
 from our_tools.csaparser import parse_txt
 from our_tools.outliers import calc_outliers
 
+from otools import parse_to_json
+
+def get_outliers_chart(date):
+    int_date_day=int(date.split('-')[0])
+    int_date_hour=int(date.split('-')[1])
+
+    int_date=(24*(int_date_day-1))+int_date_hour
+  
+    resp=parse_to_json.to_json_from_mat(int_date)
+    return resp
+
+def get_stations_chart(station_no):
+    resp=parse_to_json.to_json_by_station(int(station_no))
+    return resp
+
 
 def get_chart(date, outlier_method,interpol_method):
     ly = []

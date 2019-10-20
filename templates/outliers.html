@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/outliers.js') }}"></script>
+    <div class="container">
+        <div class="row p-3">
+            <div class="col-3">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6>Control Panel</h6>
+                    </div>
+                    <div class="card-body control-panel">
+                        <label for="customRange1"><b>Date to View:</b> <span id="current-date">01-01</span></label>
+                        <input type="range" id="date-slider" class="custom-range menu-item" id="customRange1" min="0"
+                               max="743" value="0">
+                        <br>
+                        <h6 class="menu-item"><b>Investigate:</b></h6>
+                        <div class="form-group">
+                            <label for="selectstation">By Station:</label>
+                            <select class="form-control" id="selectstation" name="selectst">
+                              <option>BACK</option>
+                              <option>FCHP</option>
+                              <option>FCHU</option>
+                              <option>FSIM</option>
+                              <option>FSMI</option>
+                              <option>GILL</option>
+                              <option>LGRR</option>
+                              <option>MCMU</option>
+                              <option>MSTK</option>
+                              <option>NORM</option>
+                              <option>POLS</option>
+                              <option>RABB</option>
+                              <option>THRF</option>
+                              <option>VULC</option>
+                              <option>WEYB</option>
+                              <option>WGRY</option>
+                              <option>BLC</option>
+                              <option>BRD</option>
+                              <option>CBB</option>
+                              <option>FCC</option>
+                              <option>IQA</option>
+                              <option>MEA</option>
+                              <option>OTT</option>
+                              <option>RES</option>
+                              <option>STJ</option>
+                              <option>VIC</option>
+                            </select>
+                            </div>
+                            <button id="search_station" onclick=searchbystation() class="btn btn-primary">Submit</button>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6>Graph by Time Period:</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <canvas id="canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row p-3">
+        <div class="col-3"></div>
+            <div class="col-9">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6>Graph by Station:</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <canvas id="st_canvas"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
