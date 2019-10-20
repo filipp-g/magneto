@@ -1,5 +1,6 @@
 var chart;
 var station_chart;
+var table;
 
 const names = [
     "BACK",
@@ -78,11 +79,20 @@ function updateStationChart(new_chart_data){
     });
 }
 
+function addNames(data){
+    for(var i=0; i<data.length; i++){
+        data[i].name=names[data[i].x-1];
+    }
+    return data
+}
+
 function updateChart(new_chart_data) {
     //console.log("here");
     //new_chart_data.data.labels=names;
     chart.data=new_chart_data.data;
-
+    var table_data=[]
+    var table_data=new_chart_data.data.datasets[1].data;
+    table.setData(addNames(table_data));
     chart.update({
         duration: 800,
         easing: "easeOutElastic"
@@ -99,6 +109,9 @@ $(document).ready(function() {
         type: "scatter",
     });
 
+    table = new Tabulator("#positive", {
+        autoColumns:true,
+    });
 
     redrawChart("01-01");
 });
