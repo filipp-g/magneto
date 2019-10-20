@@ -4,14 +4,17 @@
     <a class="navbar-nav navbar-brand" href="#">magneto</a>
     <div class="navbar-nav">
         <a id="map-link" class="nav-item nav-link" href="/">Map</a>
-        <a id="graph-link" class="nav-item nav-link" href="#">Graph</a>
-        <a id="graph-link" class="nav-item nav-link active" href="#">Outliers</a>
+        <a id="graph-link" class="nav-item nav-link" href="/data">Graph</a>
+        <a id="outliers-link" class="nav-item nav-link active" href="#">Outliers</a>
         <a id="map-link" class="nav-item nav-link" href="/about">About</a>
     </div>
 </nav>
 <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/outliers.js') }}"></script>
-<script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>    
+<script src="{{ url_for('static', filename='js/chart.min.js') }}"></script>
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.4.3/dist/js/tabulator.min.js"></script>
+<link href="https://unpkg.com/tabulator-tables@4.1.1/dist/css/semantic-ui/tabulator_semantic-ui.min.css" rel="stylesheet">
+<link href="/dist/css/semantic-ui/tabulator_semantic-ui.min.css" rel="stylesheet">
 <div class="container">
         <div class="row p-3">
             <div class="col-3">
@@ -88,6 +91,24 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row p-3">
+        <div class="col-3">
+        </div>
+        <div class="col-9">
+                <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6>Outliers:</h6>
+                    </div>
+                    <div class="card-body control-panel">
+                    <div class="col-sm-4" id="positive">
+                    </div>
+                    </div>
+                </div>
+            <div id="negative">
+            </div>
+        </div>
         </div>
     </div>
 {% endblock %}
