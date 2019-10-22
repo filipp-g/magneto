@@ -4,17 +4,24 @@ let circles = [];
 let num_sites = 0;
 let total_activity = 0;
 
-var grid = "";
+let grid = "";
 
 function initMap() {
-    heatMap = new google.maps.Map(document.getElementById("map"), {
+    map = new google.maps.Map(document.getElementById("map"), {
         center: {lat: 59.991699, lng: -101.407434},
         zoom: 3.2,
-        // fullscreenControl: false,
-        // streetViewControl: false,
-        // mapTypeControl: false,
+        fullscreenControl: false,
+        streetViewControl: false,
+        mapTypeControl: false,
         scaleControl: true
     });
+
+    heatMap = new google.maps.visualization.HeatmapLayer({
+        map: map,
+        radius: 15,
+        opacity: 0.4
+    });
+
     createMarkers(0);
 }
 
@@ -78,26 +85,24 @@ function heatMapMaker(lat, lng, time) {
 
 function createMarkers(day) {
     clearMarkers();
-    // let infowindow = new google.maps.InfoWindow();
-    var dayStr = intToDate(day);
-    var heatMapData = [];
+    let dayStr = intToDate(day);
+    let heatMapData = [];
 
-
-    for (let key in heatmap_magneto_json) {
+    for (let key in heatmap_json) {
         if (grid != "") {
             heatMapData.push({
                 location: new google.maps.LatLng(
-                    heatmap_magneto_json[key]["lat"],
-                    heatmap_magneto_json[key]["long"]
+                    heatmap_json[key]["lat"],
+                    heatmap_json[key]["long"]
                 ),
-                weight: heatMapMaker(heatmap_magneto_json[key]["lat"],
-                    heatmap_magneto_json[key]["long"], day)
+                weight: heatMapMaker(heatmap_json[key]["lat"],
+                    heatmap_json[key]["long"], day)
             });
         }
         // let marker = new google.maps.Marker({
         //     position: new google.maps.LatLng(
-        //         heatmap_magneto_json[key]["lat"],
-        //         heatmap_magneto_json[key]["long"]
+        //         heatmap_json[key]["lat"],
+        //         heatmap_json[key]["long"]
         //     ),
         //     icon: {
         //         path: google.maps.SymbolPath.CIRCLE,
@@ -115,14 +120,6 @@ function createMarkers(day) {
         // });
         // circle.bindTo("center", marker, "position");
 
-        heatMap = new google.maps.visualization.HeatmapLayer({
-            data: heatMapData,
-            map: heatMap,
-            radius: 100,
-            opacity: 0.05
-        });
-
-
         // google.maps.event.addListener(
         //     circle,
         //     "click",
@@ -134,7 +131,7 @@ function createMarkers(day) {
         //                 "</h6>" +
         //                 "<p>" +
         //                 "magnetic field: " +
-        //                 heatmap_magneto_json[key]["data"][dayStr].toLocaleString() +
+        //                 heatmap_json[key]["data"][dayStr].toLocaleString() +
         //                 "</p>"; /*'Location'*/
         //             infowindow.setContent(content);
         //             infowindow.open(heatMap, marker);
@@ -147,7 +144,7 @@ function createMarkers(day) {
         // });
 
         num_sites++;
-        total_activity += heatmap_magneto_json[key]["data"][dayStr];
+        total_activity += heatmap_json[key]["data"][dayStr];
         setAverageActivity();
 
         // markers.push(marker);

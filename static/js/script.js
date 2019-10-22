@@ -61,9 +61,9 @@ function createMarkers(day) {
     let infowindow = new google.maps.InfoWindow();
     var dayStr = intToDate(day);
 
-    for (let key in magneto_json) {
+    for (let key in map_json) {
         let marker = new google.maps.Marker({
-            position: new google.maps.LatLng(magneto_json[key]["lat"], magneto_json[key]["long"]),
+            position: new google.maps.LatLng(map_json[key]["lat"], map_json[key]["long"]),
             icon: {
                 path: google.maps.SymbolPath.CIRCLE,
                 scale: 0
@@ -72,7 +72,7 @@ function createMarkers(day) {
         });
         let circle = new google.maps.Circle({
             map: map,
-            radius: magneto_json[key]["data"][dayStr] * 1000,    // 10 miles in metres
+            radius: map_json[key]["data"][dayStr] * 1000,    // 10 miles in metres
             fillColor: 'red',
             fillOpacity: .2,
             strokeColor: 'white',
@@ -83,7 +83,7 @@ function createMarkers(day) {
         google.maps.event.addListener(circle, 'click', (function (marker, i) {
             return function () {
                 let content = '<div id="infowindow"><h6>' + key + '</h6>'
-                    + '<p>' + 'magnetic field: ' + (magneto_json[key]["data"][dayStr]).toLocaleString()
+                    + '<p>' + 'magnetic field: ' + (map_json[key]["data"][dayStr]).toLocaleString()
                     + '</p>'/*'Location'*/;
                 infowindow.setContent(content);
                 infowindow.open(map, marker);
@@ -95,7 +95,7 @@ function createMarkers(day) {
         });
 
         num_sites++;
-        total_activity += magneto_json[key]["data"][dayStr];
+        total_activity += map_json[key]["data"][dayStr];
         setAverageActivity();
 
         markers.push(marker);

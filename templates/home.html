@@ -2,7 +2,7 @@
 
 {% block content %}
     <script charset="utf-8">
-        let magneto_json = {{ magneto_json|safe }};
+        let map_json = {{ map_json|safe }};
     </script>
 
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-between">
@@ -56,6 +56,6 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLieeiefNfkqBmCwm0FMLiQiXhqTM8p_k&libraries=visualization&callback=initMap"
             async sdefer></script>
-    <script src="{{ url_for('static', filename='js/grid-cache.js') }}" type="module"></script>
+{#    <script src="{{ url_for('static', filename='js/grid-cache.js') }}" type="module"></script>#}
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 {% endblock %}
