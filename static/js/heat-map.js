@@ -1,10 +1,14 @@
 let heatmap;
+let heatMapData = [];
 let markers = [];
 let circles = [];
 let num_sites = 0;
 let total_activity = 0;
 
-var grid = "";
+let grid = "";
+$.get("static/data/grid-cache.txt", {}, function (content) {
+    grid = JSON.parse(content);
+});
 
 function initMap() {
     map = new google.maps.Map(document.getElementById("map"), {
@@ -26,19 +30,19 @@ function initMap() {
 }
 
 function saveImg() {
-    var zoom = map.zoom;
-    var centre = map.getBounds().getCenter();
-    var spherical = google.maps.geometry.spherical;
-    bounds = map.getBounds();
-    var cor1 = bounds.getNorthEast();
-    var cor2 = bounds.getSouthWest();
-    var cor3 = new google.maps.LatLng(cor2.lat(), cor1.lng());
-    var cor4 = new google.maps.LatLng(cor1.lat(), cor2.lng());
+    let zoom = map.zoom;
+    let centre = map.getBounds().getCenter();
+    let spherical = google.maps.geometry.spherical;
+    let bounds = map.getBounds();
+    let cor1 = bounds.getNorthEast();
+    let cor2 = bounds.getSouthWest();
+    let cor3 = new google.maps.LatLng(cor2.lat(), cor1.lng());
+    let cor4 = new google.maps.LatLng(cor1.lat(), cor2.lng());
 
-    var width = distanceInPx(cor1, cor4);
-    var height = distanceInPx(cor1, cor3);
+    let width = distanceInPx(cor1, cor4);
+    let height = distanceInPx(cor1, cor3);
 
-    var imgUrl =
+    let imgUrl =
         "https://maps.googleapis.com/maps/api/staticmap?center=" +
         centre.lat() +
         "," +
@@ -61,18 +65,18 @@ function saveImg() {
 
     imgUrl += ".jpg";
 
-    var link = document.getElementById("staticLink");
+    let link = document.getElementById("staticLink");
     link.setAttribute("href", imgUrl);
     link.style.display = "block";
 }
 
 function distanceInPx(pos1, pos2) {
-    var p1 = map.getProjection().fromLatLngToPoint(pos1);
-    var p2 = map.getProjection().fromLatLngToPoint(pos2);
+    let p1 = map.getProjection().fromLatLngToPoint(pos1);
+    let p2 = map.getProjection().fromLatLngToPoint(pos2);
 
-    var pixelSize = Math.pow(2, -map.getZoom());
+    let pixelSize = Math.pow(2, -map.getZoom());
 
-    var d =
+    let d =
         Math.sqrt((p1.x - p2.x) * (p1.x - p2.x) + (p1.y - p2.y) * (p1.y - p2.y)) /
         pixelSize;
 
@@ -86,10 +90,9 @@ function heatMapMaker(lat, lng, time) {
 function createMarkers(day) {
     clearMarkers();
     let infowindow = new google.maps.InfoWindow();
-    var dayStr = intToDate(day);
+    let dayStr = intToDate(day);
 
     if (grid != "") {
-        var heatMapData = [];
         for (lat = 45; lat <= 75; lat++) {
             for (long = -52; long >= -139; long--) {
                 heatMapData.push({
@@ -142,10 +145,6 @@ function createMarkers(day) {
                 };
             })(marker, num_sites)
         );
-        document.getElementById("staticLink").addEventListener("click", function () {
-            // document.getElementById("demo").innerHTML = "Hello World";
-            saveImg();
-        });
 
         num_sites++;
         total_activity += heatmap_json[key]["data"][dayStr];
@@ -154,6 +153,10 @@ function createMarkers(day) {
         markers.push(marker);
         circles.push(circle);
     }
+    document.getElementById("staticLink").addEventListener("click", function () {
+        // document.getElementById("demo").innerHTML = "Hello World";
+        saveImg();
+    });
 }
 
 function clearMarkers() {
@@ -165,10 +168,11 @@ function clearMarkers() {
     }
     markers = [];
     circles = [];
+    heatMapData = [];
 }
 
 Number.prototype.pad = function (size) {
-    var s = String(this);
+    let s = String(this);
     while (s.length < (size || 2)) {
         s = "0" + s;
     }
@@ -178,10 +182,6 @@ Number.prototype.pad = function (size) {
 function intToDate(x) {
     return Math.floor(x / 24 + 1).pad(2) + "-" + ((x % 24) + 1).pad(2);
 }
-
-$.get("static/js/grid-cache.txt", {}, function (content) {
-    grid = JSON.parse(content);
-});
 
 // Doesnt not wait for user to release mouse
 $(document).on("input", "#heatmap-date-slider", function (e) {

@@ -9,8 +9,8 @@ with open('static/data/map_data.json', 'r') as file:
 
 
 @app.route('/')
-def request_home():
-    return render_template('home.html', map_json=input_data)
+def request_map():
+    return render_template('bubblemap.html', map_json=input_data)
 
 
 @app.route('/heatmap')
