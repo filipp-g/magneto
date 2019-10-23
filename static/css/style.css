@@ -7,12 +7,13 @@ body {
 
 /* Always set the map height explicitly to define the size of the div
 * element that contains the map. */
-.map-card-body {
-    height: 480px;
+#map {
+    height: 100%;
+    max-height: 500px;
 }
 
-#map {
-    height: 77%;
+.card {
+    max-height: 545px;
 }
 
 .menu-item {

@@ -27,16 +27,8 @@
                         <label for="heatmap-date-slider"><b>Date to View:</b>
                             <span id="heatmap-current-date">01-01</span>
                         </label>
-                        <input type="range" id="heatmap-date-slider" class="custom-range menu-item" min="0" max="743"
-                               value="0">
-                        <label><b>Average Geomagnetic Activity:</b>
-                            <span id="map-average-activity">0</span>
-                        </label>
-                        <br>
-                        <a id="staticLink" target="_blank" title="Show static map">
-                            <button id="demo" class="btn btn-primary" onclick="saveImg()"> Take Screenshot
-                            </button>
-                        </a>
+                        <input type="range" id="heatmap-date-slider" class="custom-range menu-item"
+                               min="0" max="743" value="0">
                     </div>
                 </div>
             </div>
@@ -57,5 +49,4 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLieeiefNfkqBmCwm0FMLiQiXhqTM8p_k&libraries=visualization&callback=initMap"
             async sdefer></script>
     <script src="{{ url_for('static', filename='js/heat-map.js') }}"></script>
-{#    <script src="{{ url_for('static', filename='js/grid-cache.js') }}" type="module"></script>#}
 {% endblock %}

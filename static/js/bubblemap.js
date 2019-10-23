@@ -2,6 +2,7 @@ let map;
 let circles = [];
 let site_keys = [];
 let num_sites = 0;
+let infowindow;
 
 function initMap() {
     site_keys = Object.keys(map_json);
@@ -15,11 +16,11 @@ function initMap() {
         mapTypeControl: false,
         scaleControl: true,
     });
-    createMarkers(0);
+    createCircles(0);
 }
 
-function createMarkers(day) {
-    let infowindow = new google.maps.InfoWindow();
+function createCircles(day) {
+    infowindow = new google.maps.InfoWindow();
     let dayStr = intToDate(day);
     let total_activity = 0;
 
@@ -56,6 +57,7 @@ function setAverageActivity(activity) {
 }
 
 function updateMarkers(day) {
+    infowindow.close();
     let total_activity = 0;
     let dayStr = intToDate(day);
     for (let i = 0; i < site_keys.length; i++) {
