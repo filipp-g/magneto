@@ -10,8 +10,10 @@ from our_tools.csaparser import parse_txt
 grid = np.array(json.loads(open('../data/grid-cache.txt').read()))
 
 
-def estimate_value(lat, long, time):
-    return grid[int(lat) - 30][-30 - int(long)][time]
+def estimate_value(lat_in, long_in):
+    lat = (lat_in -45.4) * 2000
+    long = (-52 - long_in) * 2000
+    return grid[int(lat)][int(long)]
 
 
 # full = parse_txt('../data/dataset2_full.txt')

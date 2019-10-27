@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <script charset="utf-8">
+        let heatmap_json = {{ heatmap_json|safe }};
+    </script>
+
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-between">
+        <a class="navbar-nav navbar-brand" href="#">magneto</a>
+        <div class="navbar-nav">
+            <a id="map-link" class="nav-item nav-link" href="/">Map</a>
+            <a id="heatmap-link" class="nav-item nav-link active" href="#">Heatmap</a>
+            <a id="graph-link" class="nav-item nav-link" href="/data">Graph</a>
+            <a id="graph-link" class="nav-item nav-link" href="/outliers">Outliers</a>
+            <a id="map-link" class="nav-item nav-link" href="/about">About</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row p-3">
+            <div class="col-3">
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                        <h6>Control Panel</h6>
+                    </div>
+                    <div class="card-body control-panel">
+                        <label for="heatmap-date-slider"><b>Date to View:</b>
+                            <span id="heatmap-current-date">01-01</span>
+                        </label>
+                        <input type="range" id="heatmap-date-slider" class="custom-range menu-item"
+                               min="0" max="743" value="0">
+                    </div>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="card shadow mb-4">
+                    <div class="card-body map-card-body">
+                        <div class="embed-responsive embed-responsive-4by3">
+                            <div id="map-container" class="embed-responsive-item">
+                                <div id="map"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLieeiefNfkqBmCwm0FMLiQiXhqTM8p_k&libraries=visualization&callback=initMap"
+            async sdefer></script>
+    <script src="{{ url_for('static', filename='js/heat-map.js') }}"></script>
+{% endblock %}

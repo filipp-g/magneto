@@ -9,8 +9,13 @@ with open('static/data/map_data.json', 'r') as file:
 
 
 @app.route('/')
-def request_home():
-    return render_template('home.html', magneto_json=input_data)
+def request_map():
+    return render_template('bubblemap.html', map_json=input_data)
+
+
+@app.route('/heatmap')
+def request_heatmap():
+    return render_template('heatmap.html', heatmap_json=input_data)
 
 
 @app.route('/data')
